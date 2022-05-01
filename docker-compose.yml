@@ -40,6 +40,18 @@ services:
             - "15672:15672"
         networks: 
             - backend
+    localstack:
+        container_name: localstack
+        image: localstack/localstack:latest
+        environment: 
+            - AWS_DEFAULT_REGION=ap-southeast-1
+            - EDGE_PORT=4566
+            - SERVICES=s3
+        ports: 
+            - '4566-4583:4566-4583'
+        volumes: 
+            - "${TEMPDIR:-/tmp/localstack}:/tmp/localstack"
+            - "/var/run/docker.sock:/var/run/docker.sock"
             
 volumes:
     postgres-data:
